@@ -5,10 +5,13 @@ import java.util.*;
 public class EasyMath {
 
     List<Integer> validList = new ArrayList<>();
+    HashMap<Integer,Integer> map = new HashMap<>();
+
     public EasyMath() {
-        int[] invalidNumbers = {1,2,3,5,6,7,9,};
         validList.add(4);
         validList.add(0);
+        map.put(0,0);
+        map.put(4,0);
     }
     // Charlie and Johnny play a game.  For every integer X Charlie gives,
     // Johnny has to find the smallest positive integer Y, such that X*Y contains
@@ -64,16 +67,20 @@ public class EasyMath {
 
         System.out.println(i*number);
         System.out.println(countFoursAndZeros(i*number));
+        System.out.println(calculateResult());
         return i;
+    }
+
+    private int calculateResult(){
+        // 2*a + b  // a is number of 4's  || b is number of 0's
+        return (2 * map.get(4)+map.get(0));
     }
     private boolean zeroOrFour(int number){
 
         return validList.contains(number % 10);
     }
     private HashMap<Integer,Integer> countFoursAndZeros(int number){
-        HashMap<Integer,Integer> map = new HashMap<>();
-        map.put(0,0);
-        map.put(4,0);
+
 
         var zeroOrFour = 0;
         while(number != 0){
@@ -92,11 +99,10 @@ public class EasyMath {
             temp = zeroOrFour;
 
             zeroOrFour = number%10;
-            if (!validList.contains(zeroOrFour))
+            if (!validList.contains(zeroOrFour))  // TODO: reverse this check //  check against invalid numbers
                 return false;
-            if (temp > zeroOrFour)
+            if (temp > zeroOrFour)  // 0 Precedes a 4
                 return false;
-
 
             number = number / 10;
             System.out.println(number);
