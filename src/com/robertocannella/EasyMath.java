@@ -1,0 +1,109 @@
+package com.robertocannella;
+
+import java.util.*;
+
+public class EasyMath {
+
+    List<Integer> validList = new ArrayList<>();
+    public EasyMath() {
+        int[] invalidNumbers = {1,2,3,5,6,7,9,};
+        validList.add(4);
+        validList.add(0);
+    }
+    // Charlie and Johnny play a game.  For every integer X Charlie gives,
+    // Johnny has to find the smallest positive integer Y, such that X*Y contains
+    // only 4's and 0's and starts with one or more 4's followed by zero or more 0's
+    //  i.e. 404 is an invalid number but 400 is a valid number
+
+    // possible other valid numbers:
+    // 4, 40, 44, 400, 440, 444, 4000, 4400, 4440, 4444, 40000, 44000,
+
+    // if a is the number of 4's and b is the number of 0's, can you
+    // print the value of (2*a)+b.
+
+    // Input format:
+    // The first line contains and integer T. (total)  T lines follow, each line
+    // containing the integer X as stated above.
+
+    // Output format:
+    // For every X, print the output (2*a)+b in a new line as stated in the problem statement
+
+    // constraints
+    //1<=T<=10^3
+    //1<=X<=1-^4
+
+    // Sample input
+    // T:3
+    // X:4
+    // X:5
+    // X:80
+
+    // Sample output
+    // (2*a) + b = 2  1*4=4 [(2*1) + 0 = 2
+    // (2*a) + b = 3  8*5=40 [(2*1) + 1) = 3
+    // (2*a) + b = 4  5*80=400  [(2*1) + 2) = 4
+
+
+    // 457 % 10 = 7 // last number (remainder)
+    // 457 /10 = 45 // first numbers
+    // 45 % 10 = 5  // last number
+    // 45 / 10 = 4  // first number
+    // 4 % 10 = 4  // last number
+    // 4 / 10 = 0 //
+
+    public int foursGame(int number){
+
+        var i = 1;
+        var result = i * number;
+        var isValid = isValid(result);
+
+        while (!isValid){
+            isValid = isValid(number * ++i);
+        }
+        System.out.println(i);
+
+        System.out.println(i*number);
+        System.out.println(countFoursAndZeros(i*number));
+        return i;
+    }
+    private boolean zeroOrFour(int number){
+
+        return validList.contains(number % 10);
+    }
+    private HashMap<Integer,Integer> countFoursAndZeros(int number){
+        HashMap<Integer,Integer> map = new HashMap<>();
+        map.put(0,0);
+        map.put(4,0);
+
+        var zeroOrFour = 0;
+        while(number != 0){
+            zeroOrFour = number%10;
+                map.put(zeroOrFour,map.get(zeroOrFour)+1);
+            number = number/10;
+        }
+        return map;
+    }
+
+    private boolean isValid(int number){
+        System.out.println(number);
+        var zeroOrFour = 0;
+        var temp = 0;
+        while(number !=0 ){
+            temp = zeroOrFour;
+
+            zeroOrFour = number%10;
+            if (!validList.contains(zeroOrFour))
+                return false;
+            if (temp > zeroOrFour)
+                return false;
+
+
+            number = number / 10;
+            System.out.println(number);
+        }
+
+        return  true;
+    }
+
+
+}

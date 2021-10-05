@@ -3,6 +3,8 @@ package com.robertocannella;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("hello world");
+        var game = new EasyMath();
+        var result = game.foursGame(80);
+
     }
 }
