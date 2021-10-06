@@ -4,14 +4,18 @@ import java.util.*;
 
 public class EasyMath {
 
-    List<Integer> validList = new ArrayList<>();
-    HashMap<Integer,Integer> map = new HashMap<>();
+    private List<Integer> validList = new ArrayList<>();
+    private HashMap<Integer,Integer> map = new HashMap<>();
+    private int a;
+    private int b;
 
-    public EasyMath() {
-        validList.add(4);
-        validList.add(0);
-        map.put(0,0);
-        map.put(4,0);
+    public EasyMath(int a, int b) {
+        this.a =a;
+        this.b =b;
+        validList.add(a);
+        validList.add(b);
+        map.put(a,0);
+        map.put(b,0);
     }
     // Charlie and Johnny play a game.  For every integer X Charlie gives,
     // Johnny has to find the smallest positive integer Y, such that X*Y contains
@@ -73,7 +77,7 @@ public class EasyMath {
 
     private int calculateResult(){
         // 2*a + b  // a is number of 4's  || b is number of 0's
-        return (2 * map.get(4)+map.get(0));
+        return (2 * map.get(this.b)+map.get(this.a));
     }
     private boolean zeroOrFour(int number){
 
