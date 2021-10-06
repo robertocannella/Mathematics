@@ -84,8 +84,6 @@ public class EasyMath {
         return validList.contains(number % 10);
     }
     private HashMap<Integer,Integer> countFoursAndZeros(int number){
-
-
         var zeroOrFour = 0;
         while(number != 0){
             zeroOrFour = number%10;
