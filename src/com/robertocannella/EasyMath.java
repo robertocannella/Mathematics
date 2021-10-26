@@ -1,8 +1,120 @@
 package com.robertocannella;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class EasyMath {
+
+    public static long binaryCounter(int countTo, int X){
+        String number = "4";
+        String[] splitFours;
+
+
+        int start = 0;
+        while (start < countTo) {
+            System.out.println(number);
+            BigInteger bigInteger = new BigInteger(number);
+            if (bigInteger.mod(new BigInteger(String.valueOf(X))).equals(BigInteger.ZERO)){
+                System.out.println("MATCH MATCH");
+                System.out.println(bigInteger.divide(new BigInteger(String.valueOf(X))));
+                break;
+            }
+            splitFours = number.split("0");
+            char[] countFours = splitFours[0].toCharArray();
+
+            int length = number.length();
+            int totalFours = countFours.length;
+            number = "";
+
+
+            if (totalFours == length){
+                number = "4";
+                for (int i = 0; i < length; i++) {
+                    number = number.concat("0");
+                }
+                continue;
+            }
+
+
+            if (totalFours < length){
+                int zerosToAdd = length - (totalFours +1 );
+                for (int i = 0; i <= totalFours; i++) {
+                    number = number.concat("4");
+                }
+                for (int i = 0; i < zerosToAdd; i++) {
+                    number = number.concat("0");
+                }
+            }
+
+            //chars = number.toCharArray();
+            //zeros = number.split("4");
+            //System.out.println(zeros[zeros.length-1]);
+//            System.out.println(Arrays.toString(splitFours));
+//            System.out.println(number.length());
+//            System.out.println(number);
+//            System.out.println(countFours.length);
+            start++;
+        }
+        return  Long.parseLong(number);
+
+    }
+    public static int solve(int x) {
+
+        int[] results = {0,0};
+        long ans = 4;
+        int i =1;
+        String binS;
+
+        while(i < x){
+            binS = Long.toBinaryString(i);
+            //System.out.println("binary string: " + binS);
+            long bin = Long.parseLong(binS);
+            ans = 4 * bin;
+            if (x%4 == 0) {
+                // check sequence is correct
+                // and return int[numberOf4s, numberOf0s]
+                System.out.println(ans);
+
+                results = hasRepeatingElement(ans);
+                //System.out.println(Arrays.toString(results));
+                if (results[1] == -1) {
+                    i++;
+                    continue;
+                }
+                break;
+            }
+            i++;
+        }
+        // challang asks us to return the sum of the array * 2
+        // 2* a+b
+        System.out.println(ans);
+        System.out.println(Arrays.toString(results));
+        if (results[1] == -1)
+            return 0;
+        else
+            return (2 * results[0])+results[1];
+    }
+    public static int[] hasRepeatingElement( long number){
+        int[] results = {0,0};
+        long remainder;
+        while (number != 0){
+            remainder = number%10;
+            number = number/10;
+            if (remainder == 4)
+                results[0]++;
+            if (remainder == 0 && results[0] > 0) { // check if we already have a 4 in the number
+                results[1] = -1;   // flag the array for validity
+                return results;
+            }
+            if (remainder == 0 )
+                results[1]++;
+
+        }
+        return results;
+    }
+
+
+
 
     private List<Integer> validList = new ArrayList<>();
     private HashMap<Integer,Integer> map = new HashMap<>();
@@ -80,7 +192,6 @@ public class EasyMath {
         return (2 * map.get(this.b)+map.get(this.a));
     }
     private boolean zeroOrFour(int number){
-
         return validList.contains(number % 10);
     }
     private HashMap<Integer,Integer> countFoursAndZeros(int number){
